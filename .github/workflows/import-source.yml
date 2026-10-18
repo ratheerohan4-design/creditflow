@@ -1,0 +1,33 @@
+name: Import CreditFlow source
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unpack the app into frontend/
+        run: |
+          set -euo pipefail
+          curl -fsSL -o /tmp/cf.zip "https://site-7f084d54743f4147826ca374721a8736.freebuff.page/creditflow-source.zip"
+          unzip -t /tmp/cf.zip > /dev/null
+          rm -rf frontend
+          mkdir -p frontend
+          unzip -q /tmp/cf.zip -d frontend
+          test -f frontend/package.json
+          echo "files=$(find frontend -type f | wc -l)"
+
+      - name: Commit and push
+        run: |
+          set -euo pipefail
+          git config user.name "CreditFlow import"
+          git config user.email "import@users.noreply.github.com"
+          git add -A
+          git commit -m "Import CreditFlow app source under frontend/"
+          git push
