@@ -1,0 +1,127 @@
+@theme {
+  /* Brand */
+  --color-navy: #0d2b45;
+  --color-navy-soft: #163a5a;
+  --color-teal: #0a4a5c;
+  --color-amber: #f5a623;
+  --color-amber-ink: #7a4d06;
+  --color-success: #2e7d32;
+  --color-success-ink: #1e5a22;
+  --color-danger: #c62828;
+  --color-danger-ink: #8f1d1d;
+
+  /* Surfaces */
+  --color-canvas: #f7f8fa;
+  --color-surface: #ffffff;
+  --color-ink: #1a1a2e;
+  --color-muted: #5b6475;
+  --color-line: #e3e6ec;
+  --color-line-strong: #ccd2dc;
+
+  /* Soft tints for status pills */
+  --color-tint-navy: #e8edf3;
+  --color-tint-teal: #e2eef1;
+  --color-tint-amber: #fdf1da;
+  --color-tint-success: #e7f2e8;
+  --color-tint-danger: #fbe8e8;
+  --color-tint-neutral: #eef0f4;
+
+  --font-sans:
+    'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+
+  --radius-card: 8px;
+  --radius-control: 6px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: #f9dfa8;
+    color: var(--color-navy);
+  }
+}
+
+@keyframes cf-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* The only motion in the product: a short fade on route and panel changes. */
+.cf-fade {
+  animation: cf-fade 180ms ease-out;
+}
+
+.cf-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.cf-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--color-line-strong);
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cf-fade {
+    animation: none;
+  }
+}
+
+@media print {
+  .print-hide {
+    display: none !important;
+  }
+
+  body {
+    background-color: #ffffff;
+  }
+
+  /* The QR sheet prints on its own, without the app chrome around it. */
+  body * {
+    visibility: hidden;
+  }
+
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+
+  .print-area {
+    position: absolute;
+    left: 50%;
+    top: 48px;
+    transform: translateX(-50%);
+    border: 0;
+    padding: 0;
+  }
+}
